@@ -8,7 +8,6 @@
 #ifndef INCLUDES_SPI_H_
 #define INCLUDES_SPI_H_
 
-
 /**************************************************************************************
 * SPI_init
 * Initializes the SPI controller
