@@ -29,6 +29,7 @@
  */
 
 #include "MKL25Z4.h"
+#include "spi.h"
 
 static int i = 0;
 

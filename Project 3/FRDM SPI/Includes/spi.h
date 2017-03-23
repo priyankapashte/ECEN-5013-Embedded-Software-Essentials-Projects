@@ -8,6 +8,12 @@
 #ifndef INCLUDES_SPI_H_
 #define INCLUDES_SPI_H_
 
+/* Included libraries */
+#include "MKL25Z4.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
 /**************************************************************************************
 * SPI_init
 * Initializes the SPI controller
@@ -45,7 +51,7 @@ void SPI_write_byte(uint8_t byte);
 * @param size - Size of the packet
 * @return - None
 **************************************************************************************/
-void SPI_send_packet(uint8_* p, size_t length);
+void SPI_send_packet(uint8_t * p, size_t length);
 
 
 /**************************************************************************************
