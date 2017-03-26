@@ -5,14 +5,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Sources/main.c \
+../Sources/nordic.c \
 ../Sources/spi.c 
 
 OBJS += \
 ./Sources/main.o \
+./Sources/nordic.o \
 ./Sources/spi.o 
 
 C_DEPS += \
 ./Sources/main.d \
+./Sources/nordic.d \
 ./Sources/spi.d 
 
 

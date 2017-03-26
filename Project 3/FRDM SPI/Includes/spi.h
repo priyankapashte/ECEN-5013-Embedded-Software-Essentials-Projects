@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#define SS_HIGH (GPIOD_PCOR |= 1)
+#define SS_LOW  (GPIOD_PSOR |= 1)
+
 /**************************************************************************************
 * SPI_init
 * Initializes the SPI controller
@@ -27,10 +30,9 @@
  * SPI_read_byte
  * Reads a single byte from the SPI bus
  *
- * @param byte - Store the value read in byte
  * @return - None
  **************************************************************************************/
-void SPI_read_byte(uint8_t byte);
+uint8_t SPI_read_byte();
 
 /**************************************************************************************
 * SPI_write_byte
@@ -61,5 +63,7 @@ void SPI_send_packet(uint8_t * p, size_t length);
 * @return - None
 **************************************************************************************/
 void SPI_flush();
+
+
 
 #endif /* INCLUDES_SPI_H_ */

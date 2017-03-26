@@ -8,24 +8,39 @@
 #ifndef INCLUDES_NORDIC_H_
 #define INCLUDES_NORDIC_H_
 
+#include "spi.h"
+
+#define R_REG               (0x00)
+#define W_REG               (0x20)
+#define NRF_STATUS_REG      (0x07)
+#define NRF_CONFIG_REG      (0x00)
+#define NRF_CONFIG_PRIM_RX  (0x01)
+#define NRF_CONFIG_PWR_UP   (0x02)
+#define NRF_RF_SETUP_REG    (0x06)
+#define NRF_RF_CH_REG       (0x05)
+#define NRF_TX_ADDR         (0x10)
+#define NRF_FIFO_STATUS_REG (0x17)
+#define NRF_FLUSH_TX_FIFO   (0xE1)
+#define NRF_FLUSH_RX_FIFO   (0xE2)
+
+uint8_t tx_addr[5];
 /**************************************************************************************
 * nrf_read_register
 * Read the register and return the value
 *
-* @param register - Register from where value is read
-* @return - Register value read
+* @param reg - Register from where value is read
+* @return - None
 **************************************************************************************/
-uint8_t nrf_read_register(uint8_t register);
+void nrf_read_register(uint8_t reg);
 
 /**************************************************************************************
 * nrf_write_register
-*  Write to the given register with the data.
+* Write to the given register with the data.
 *
-* @param register - Register to write the value
-* @param value - Value to be written in the register
+* @param reg - Register to write the value
 * @return - None
 **************************************************************************************/
-void nrf_write_register(uint8_t register, uint8_t value);
+void nrf_write_register(uint8_t reg);
 
 /**************************************************************************************
 * nrf_read_status
@@ -42,7 +57,7 @@ uint8_t nrf_read_status();
 * @param config - Value to be written in CONFIG register
 * @return - None
 **************************************************************************************/
-void nrf_write_config(uint8_t config);
+void nrf_write_config();
 
 /**************************************************************************************
 * nrf_read_config
@@ -91,7 +106,7 @@ void nrf_write_rf_ch(uint8_t channel);
 *
 * @return - Pointer to the bytes of the TX_ADDR register
 **************************************************************************************/
-uint8_t * nrf_read_TX_ADDR();
+uint8_t* nrf_read_TX_ADDR();
 
 /**************************************************************************************
 * nrf_write_TX_ADDR
@@ -100,7 +115,7 @@ uint8_t * nrf_read_TX_ADDR();
 * @param tx_addr - Pointer to the 8 bytes to be written into the TX_ADDR register
 * @return - None
 **************************************************************************************/
-void nrf_write_TX_ADDR(uint8_t * tx_addr);
+void nrf_write_TX_ADDR(uint8_t* tx_addr);
 
 /**************************************************************************************
 * nrf_read_fifo_status
