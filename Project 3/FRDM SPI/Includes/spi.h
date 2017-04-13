@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define SS_HIGH (GPIOD_PCOR |= 1)
-#define SS_LOW  (GPIOD_PSOR |= 1)
+#define SS_HIGH (PTD_BASE_PTR->PSOR = 1<<6)
+#define SS_LOW  (PTD_BASE_PTR->PCOR = 1<<6)
 
 /**************************************************************************************
 * SPI_init
@@ -41,7 +41,7 @@ uint8_t SPI_read_byte();
 * @param byte - Value of the byte to be written
 * @return - None
 **************************************************************************************/
-void SPI_write_byte(uint8_t byte);
+uint8_t SPI_write_byte(uint8_t byte);
 
 
 /**************************************************************************************

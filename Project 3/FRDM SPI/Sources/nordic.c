@@ -23,8 +23,8 @@ uint8_t nrf_read_status(){
 	uint8_t value;
 	SS_LOW;
 	nrf_read_register(NRF_STATUS_REG);
-	SPI_write_byte(0xFF);
-	value = SPI_read_byte();
+	//SPI_write_byte(0xFF);
+	value = SPI_write_byte(0xFF);
 	SS_HIGH;
 	return value;
 }
@@ -35,12 +35,12 @@ void nrf_write_config(){
 	SPI_write_byte(NRF_CONFIG_PRIM_RX | NRF_CONFIG_PWR_UP);    // Writing 0x03 in CONFIG Register
 	SS_HIGH;
 }
+
 uint8_t nrf_read_config(){
 	uint8_t value;
 	SS_LOW;
 	nrf_read_register(NRF_CONFIG_REG);
-	SPI_write_byte(0xFF);
-	value = SPI_read_byte();
+	value = SPI_write_byte(0xFF);
 	SS_HIGH;
 	return value;
 }
@@ -49,13 +49,12 @@ uint8_t nrf_read_rf_setup(){
 	uint8_t value;
 	SS_LOW;
 	nrf_read_register(NRF_RF_SETUP_REG);
-	SPI_write_byte(0xFF);
-	value = SPI_read_byte();
+	value = SPI_write_byte(0xFF);
 	SS_HIGH;
 	return value;
 }
 
-void nrf_write_rf_setup(uint8_t config){
+void nrf_write_rf_setup(){
 	SS_LOW;
 	nrf_write_register(NRF_RF_SETUP_REG);
 	SPI_write_byte(0x02);
@@ -66,12 +65,11 @@ uint8_t nrf_read_rf_ch(){
 	uint8_t value;
 	SS_LOW;
 	nrf_read_register(NRF_RF_CH_REG);
-	SPI_write_byte(0xFF);
-	value = SPI_read_byte();
+	value = SPI_write_byte(0xFF);
 	SS_HIGH;
 	return value;
 }
-void nrf_write_rf_ch(uint8_t channel){
+void nrf_write_rf_ch(){
 	SS_LOW;
 	nrf_write_register(NRF_RF_CH_REG);
 	SPI_write_byte(0x05);
@@ -81,22 +79,23 @@ void nrf_write_rf_ch(uint8_t channel){
 uint8_t* nrf_read_TX_ADDR(){
 	SS_LOW;
 	nrf_read_register(NRF_TX_ADDR);
-	for(uint8_t i=0; i<5; i++)
-	{
-		SPI_write_byte(0xFF);
-		tx_addr[i] = SPI_read_byte();
+	for(uint8_t i=0; i<5; i++){
+		tx_addr[i] = SPI_write_byte(0xFF);
 	}
 	SS_HIGH;
  return tx_addr;
 }
 
-void nrf_write_TX_ADDR(uint8_t * tx_addr){
+void nrf_write_TX_ADDR(){
 	SS_LOW;
 	nrf_write_register(NRF_TX_ADDR);
-	for(uint8_t i=0; i<5; i++)
-	{
+	//for(uint8_t i=0; i<5; i++){
+	SPI_write_byte(0xAA);
 		SPI_write_byte(0xBB);
-	}
+		SPI_write_byte(0xCC);
+		SPI_write_byte(0xDD);
+		SPI_write_byte(0xEE);
+	//}
 	SS_HIGH;
 }
 
@@ -104,8 +103,7 @@ uint8_t nrf_read_fifo_status(){
 	uint8_t value;
 	SS_LOW;
 	nrf_read_register(NRF_FIFO_STATUS_REG);
-	SPI_write_byte(0xFF);
-	value = SPI_read_byte();
+	value = SPI_write_byte(0xFF);
 	SS_HIGH;
 	return value;
 }

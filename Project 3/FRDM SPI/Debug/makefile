@@ -51,7 +51,7 @@ all: FRDM\ SPI.elf secondary-outputs
 FRDM\ SPI.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "MKL25Z128xxx4_flash.ld" -Xlinker --gc-sections -L"C:/Users/Priyanka/workspace.kds/FRDM SPI/Project_Settings/Linker_Files" -Wl,-Map,"FRDM SPI.map" -specs=nano.specs -specs=nosys.specs -o "FRDM SPI.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "MKL25Z128xxx4_flash.ld" -Xlinker --gc-sections -L"C:/Users/Priyanka/workspace.kds/SPI2/Project_Settings/Linker_Files" -Wl,-Map,"FRDM SPI.map" -specs=nano.specs -specs=nosys.specs -o "FRDM SPI.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

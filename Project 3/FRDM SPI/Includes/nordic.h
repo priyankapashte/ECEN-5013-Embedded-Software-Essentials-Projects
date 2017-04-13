@@ -82,7 +82,7 @@ uint8_t nrf_read_rf_setup();
 * @param rf_setup - Value to be written to the RF_SETUP register
 * @return - None
 **************************************************************************************/
-void nrf_write_rf_setup(uint8_t rf_setup);
+void nrf_write_rf_setup();
 
 /**************************************************************************************
 * nrf_read_rf_ch
@@ -98,7 +98,7 @@ uint8_t nrf_read_rf_ch();
 *
 * @return - ??
 **************************************************************************************/
-void nrf_write_rf_ch(uint8_t channel);
+void nrf_write_rf_ch();
 
 /**************************************************************************************
 * nrf_read_TX_ADDR
@@ -115,7 +115,7 @@ uint8_t* nrf_read_TX_ADDR();
 * @param tx_addr - Pointer to the 8 bytes to be written into the TX_ADDR register
 * @return - None
 **************************************************************************************/
-void nrf_write_TX_ADDR(uint8_t* tx_addr);
+void nrf_write_TX_ADDR();
 
 /**************************************************************************************
 * nrf_read_fifo_status
