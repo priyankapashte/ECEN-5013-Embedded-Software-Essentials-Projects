@@ -32,20 +32,20 @@
 #include "spi.h"
 #include "nordic.h"
 
-static int i = 0;
-
 int main(void)
 {
 	uint8_t config_val, status_val, *tx_addr_val, rf_setup_val, rf_ch_val, fifo_status_val, tx_addr[5];
+
 	SPI_init();
+
 	while(1){
 
-		nrf_write_config();
+		nrf_write_config(NRF_CONFIG_PRIM_RX | NRF_CONFIG_PWR_UP);
 		config_val = nrf_read_config();
 		status_val = nrf_read_status();
-		nrf_write_rf_setup();
+		nrf_write_rf_setup(0x02);
 		rf_setup_val = nrf_read_rf_setup();
-		nrf_write_rf_ch();
+		nrf_write_rf_ch(0x05);
 		rf_ch_val = nrf_read_rf_ch();
 		fifo_status_val = nrf_read_fifo_status();
 		nrf_write_TX_ADDR();
@@ -56,9 +56,6 @@ int main(void)
 			tx_addr[i] = *tx_addr_val;
 			tx_addr_val++;
 		}
-
-
-
 	}
     return 0;
 }

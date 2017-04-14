@@ -14,23 +14,23 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define SS_HIGH (PTD_BASE_PTR->PSOR = 1<<6)
-#define SS_LOW  (PTD_BASE_PTR->PCOR = 1<<6)
+#define SS_HIGH (PTD_BASE_PTR->PSOR = 1<<6)		// Set Slave Select (SS) output Low
+#define SS_LOW  (PTD_BASE_PTR->PCOR = 1<<6)		// Set Slave Select (SS) output High
+#define DUMMY_BYTE 0xFF							// Dummy Byte used for reading
 
 /**************************************************************************************
 * SPI_init
 * Initializes the SPI controller
 *
-* @param size - None
 * @return - None
 **************************************************************************************/
  void SPI_init();
 
  /**************************************************************************************
  * SPI_read_byte
- * Reads a single byte from the SPI bus
+ * Reads a single byte from the SPI Bus
  *
- * @return - None
+ * @return - The byte read
  **************************************************************************************/
 uint8_t SPI_read_byte();
 
@@ -39,7 +39,7 @@ uint8_t SPI_read_byte();
 * Sends a single byte on the SPI bus
 *
 * @param byte - Value of the byte to be written
-* @return - None
+* @return - Value obtained after writing in the SPI Bus
 **************************************************************************************/
 uint8_t SPI_write_byte(uint8_t byte);
 
@@ -63,7 +63,6 @@ void SPI_send_packet(uint8_t * p, size_t length);
 * @return - None
 **************************************************************************************/
 void SPI_flush();
-
 
 
 #endif /* INCLUDES_SPI_H_ */

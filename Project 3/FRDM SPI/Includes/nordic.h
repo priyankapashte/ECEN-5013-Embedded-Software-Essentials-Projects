@@ -54,10 +54,10 @@ uint8_t nrf_read_status();
 * nrf_write_config
 * Write to CONFIG register
 *
-* @param config - Value to be written in CONFIG register
+* @param value - Value to be written in CONFIG register
 * @return - None
 **************************************************************************************/
-void nrf_write_config();
+void nrf_write_config(uint8_t value);
 
 /**************************************************************************************
 * nrf_read_config
@@ -79,26 +79,26 @@ uint8_t nrf_read_rf_setup();
 * nrf_write_rf_setup
 * Writes to the RF_SETUP register
 *
-* @param rf_setup - Value to be written to the RF_SETUP register
+* @param value - Value to be written to the RF_SETUP register
 * @return - None
 **************************************************************************************/
-void nrf_write_rf_setup();
+void nrf_write_rf_setup(uint8_t value);
 
 /**************************************************************************************
 * nrf_read_rf_ch
-* Reads ??
+* Reads RF_CH register
 *
-* @return - ??
+* @return - Value of the RF_CH register read
 **************************************************************************************/
 uint8_t nrf_read_rf_ch();
 
 /**************************************************************************************
 * nrf_write_rf_ch
-* Reads ??
+* Writes to the RF_CH register
 *
-* @return - ??
+* @return - None
 **************************************************************************************/
-void nrf_write_rf_ch();
+void nrf_write_rf_ch(uint8_t value);
 
 /**************************************************************************************
 * nrf_read_TX_ADDR
