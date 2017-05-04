@@ -54,13 +54,15 @@ int main(void)
 
 	LED_Colour = RED;
 	brightness = 100;
-	uint8_t x;
+	uint8_t x, checksum=0;
 	uint8_t char_recv[NUM_CHAR_RECV];
 	uint8_t data;
 	analysis_t *analysis;
   	char error_message1[100] = "Malloc failed";
  	uint8_t config_val, status_val, *tx_addr_val, rf_setup_val, rf_ch_val, fifo_status_val, tx_addr[5];
-
+ 	led_func_ptr[0] = Red_Led_Control;
+ 	led_func_ptr[1] = Green_Led_Control;
+ 	led_func_ptr[2] = Blue_Led_Control;
  	led_control_ptr = &led_control;
 
 	CI_Msg = (CI_Msg_t*)malloc(sizeof(CI_Msg_t));
@@ -90,7 +92,9 @@ int main(void)
 		if(error_code == CB_Not_Empty && rx_buf.count == 2)
 		{
 			CI_Msg->command = CB_RemoveItem(&rx_buf);
+			checksum ^= CI_Msg->command;
 			CI_Msg->length = CB_RemoveItem(&rx_buf);
+			checksum ^= CI_Msg->length;
 			while(1)
 			{
 				error_code = CB_IsBufferEmpty(&rx_buf);
@@ -99,13 +103,27 @@ int main(void)
 					for(int i=0; i<CI_Msg->length; i++)
 					{
 						CI_Msg->data[i] = CB_RemoveItem(&rx_buf);
+						checksum ^= CI_Msg->data[i];
 					}
 					CI_Msg->checksum = CB_RemoveItem(&rx_buf);
 					break;
 				}
 
 			}
-			Decode_CI_Msg(CI_Msg);
+			LOG_RAW_INTR(CI_Msg->command);
+			LOG_RAW_INTR(CI_Msg->length);
+			for(int i=0; i<CI_Msg->length; i++)
+				LOG_RAW_INTR(CI_Msg->data[i]);
+			LOG_RAW_INTR(CI_Msg->checksum);
+			if(checksum == CI_Msg->checksum)
+			{
+				Decode_CI_Msg(CI_Msg);
+			}
+			else
+			{
+				LOG_RAW_STRING("Checksum does not match. Enter the command again.\n");
+			}
+			checksum = 0;
 		}
  	}
 

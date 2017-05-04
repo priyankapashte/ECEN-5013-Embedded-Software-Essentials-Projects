@@ -5,7 +5,18 @@
  *      Author: Priyanka
  */
 
+/*******************************************************************************************
+ *  AUTHOR : Akshitha Chanda and Priyanka Pashte
+ *  FILE NAME : LED.c
+ *  FILE DESCRIPTION : This file consists of the led_init(), led_setup(), led_control(),
+ *  system_reset(), led_control_red(), led_control_blue(), led_cotrol_green(), led_off().
+ *******************************************************************************************/
 #include "led.h"
+
+/*********************************************************************************************
+ * FILE DESCRIPTION : led_init() function enables ports PORTB, PORTD and sets pins for Red, Blue, Green LED
+ * and setting mode selection to edge aligned PWM
+ *********************************************************************************************/
 
 void led_init()
 {
@@ -32,6 +43,11 @@ void led_init()
     TPM0_BASE_PTR->CONTROLS[1].CnSC = TPM_CnSC_MSB_MASK |TPM_CnSC_ELSA_MASK;
 }
 
+/*********************************************************************************************
+ * FILE DESCRIPTION : led_setup() take input character + and - to increase and decrease brightness
+ * 1,2,3 character inputs are or Red, Blue and Green color
+ *********************************************************************************************/
+
 void led_setup(uint8_t character)
 {
     if(character == '+' && brightness < 1875)
@@ -57,37 +73,67 @@ void led_setup(uint8_t character)
     led_control(LED_Colour, brightness); // Call to LED function
 }
 
+/*********************************************************************************************
+ * FILE DESCRIPTION : led_control() take input color and brightness
+ *
+ *********************************************************************************************/
+
 void led_control(LED_Colour_t LED_Colour, uint16_t brightness)
 {
 	if(LED_Colour == RED)
 	{
-		TPM2_BASE_PTR->CONTROLS[0].CnV = brightness; 	// Channel value for RED LEDColour with brightness value
-		TPM2_BASE_PTR->CONTROLS[1].CnV = 0;				// Channel value for GREEN LEDColour with brightness value as 0
-		TPM0_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for BLUE LEDColour with brightness value as 0
+		 (*led_func_ptr[0])(brightness);
 	}
 	else if(LED_Colour == GREEN)
 	{
-		TPM2_BASE_PTR->CONTROLS[1].CnV = brightness; 	// Channel value for GREEN LEDColour with brightness value
-		TPM2_BASE_PTR->CONTROLS[0].CnV = 0; 			// Channel value for RED LEDColour with brightness value as 0
-		TPM0_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for BLUE LEDColour with brightness value as 0
+		(*led_func_ptr[1])(brightness);
 	}
 	else if(LED_Colour == BLUE)
 	{
-		TPM0_BASE_PTR->CONTROLS[1].CnV = brightness; 	// Channel value for BLUE LEDColour with brightness value
-		TPM2_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for GREEN LEDColour with brightness value as 0
-		TPM2_BASE_PTR->CONTROLS[0].CnV = 0; 			// Channel value for RED LEDColour with brightness value as 0
+		(*led_func_ptr[2])(brightness);
 	}
 	else if(LED_Colour == OFF)
 	{
-		TPM0_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for BLUE LEDColour with brightness value
-		TPM2_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for GREEN LEDColour with brightness value as 0
-		TPM2_BASE_PTR->CONTROLS[0].CnV = 0; 			// Channel value for RED LEDColour with brightness value as 0
+		Led_Off();
 	}
 }
+
+/*********************************************************************************************
+ * FILE DESCRIPTION : system_reset() : It resets all registers
+ *
+ *********************************************************************************************/
 
 void system_reset(){
 
 	NVIC_SystemReset();																	/* Software Reset */
 
+}
+
+void Red_Led_Control(uint16_t brightness)
+{
+	TPM2_BASE_PTR->CONTROLS[0].CnV = brightness; 	// Channel value for RED LEDColour with brightness value
+	TPM2_BASE_PTR->CONTROLS[1].CnV = 0;				// Channel value for GREEN LEDColour with brightness value as 0
+	TPM0_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for BLUE LEDColour with brightness value as 0
+}
+
+void Green_Led_Control(uint16_t brightness)
+{
+	TPM2_BASE_PTR->CONTROLS[1].CnV = brightness; 	// Channel value for GREEN LEDColour with brightness value
+	TPM2_BASE_PTR->CONTROLS[0].CnV = 0; 			// Channel value for RED LEDColour with brightness value as 0
+	TPM0_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for BLUE LEDColour with brightness value as 0
+}
+
+void Blue_Led_Control(uint16_t brightness)
+{
+	TPM0_BASE_PTR->CONTROLS[1].CnV = brightness; 	// Channel value for BLUE LEDColour with brightness value
+	TPM2_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for GREEN LEDColour with brightness value as 0
+	TPM2_BASE_PTR->CONTROLS[0].CnV = 0; 			// Channel value for RED LEDColour with brightness value as 0
+}
+
+void Led_Off()
+{
+	TPM0_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for BLUE LEDColour with brightness value
+	TPM2_BASE_PTR->CONTROLS[1].CnV = 0; 			// Channel value for GREEN LEDColour with brightness value as 0
+	TPM2_BASE_PTR->CONTROLS[0].CnV = 0; 			// Channel value for RED LEDColour with brightness value as 0
 }
 

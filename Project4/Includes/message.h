@@ -1,13 +1,15 @@
 #ifndef _MESSAGE_H
 #define _MESSAGE_H
 
-
+/* Including standard libraries */
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "MKL25Z4.h"
 
 #define MAX_DATA_SIZE 20
+
+/* Enum defined for brightnrss percentage */
 
 typedef enum{
 	ZERO_PERCENT = 0,
@@ -23,12 +25,16 @@ typedef enum{
 	HUNDRED_PERCENT = 1875
 }Brightness_t;
 
+/* Command enum defined*/
+
 typedef enum{
 	LED = 1 ,
 	BRIGHTNESS = 2 ,
 	SYSTEM_RST = 3 ,              		   // command
 	RTC_TIMESTAMP = 4
 }Cmds_t;
+
+/* Structure of the command */
 
 typedef struct{
 	Cmds_t command;
@@ -38,11 +44,15 @@ typedef struct{
 
 }CI_Msg_t;
 
+/* Enum for error handling */
+
 typedef enum {
 	ERROR,
 	//SUCCESS,
 	NULLPOINTER_ERROR
 }CI_Msg_Error_t;
+
+/* Enum for data[0] */
 
 typedef enum{
 	LED_ON = 1,
@@ -53,6 +63,8 @@ typedef enum{
 	SYSTEM_RESET = 6,
 	//RTC_TIMESTAMP = 7
 }Led_Operations_t;
+
+/* Enum for error handling of checksum */
 
 typedef enum{
 	CHECKSUM_SUCCESS,
